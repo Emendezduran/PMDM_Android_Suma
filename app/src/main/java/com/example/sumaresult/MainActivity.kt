@@ -1,5 +1,6 @@
 package com.example.sumaresult
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnEnviar.setOnClickListener{enviar(it)}
+        btnEnviar.setOnClickListener { enviar(it) }
     }
 
     fun enviar(view: View) {
@@ -33,9 +34,21 @@ class MainActivity : AppCompatActivity() {
 
             startActivityForResult(intent, 1)
 
-        }catch (nfe: NumberFormatException){
+        } catch (nfe: NumberFormatException) {
             Toast.makeText(this, "Numero Invalido", Toast.LENGTH_SHORT)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            val result = data?.getIntExtra("result", 0)
+            resultado.text = result.toString()
+        }
+
 
     }
+
+
 }
